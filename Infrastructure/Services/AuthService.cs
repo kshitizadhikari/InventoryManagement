@@ -57,7 +57,8 @@ namespace Infrastructure.Services
                 return (null, new ErrorResponse
                 {
                     Title = "Login Error",
-                    Message = "Invalid credentials"
+                    Message = "Invalid credentials",
+                    ErrorCode = 500
                 });
             }
 
@@ -99,6 +100,7 @@ namespace Infrastructure.Services
                 {
                     Title = "Registration Error",
                     Message = "User already exists with that email",
+                    ErrorCode = 500
                 };
             }
 
@@ -117,6 +119,7 @@ namespace Infrastructure.Services
                 {
                     Title = "Registration Error",
                     Message = "User registration failed",
+                    ErrorCode = 500
                 };
             }
 

@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Interfaces.Services;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,10 +41,22 @@ namespace Infrastructure
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]))
+                        ValidIssuer = configuration["JwtSettings:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"]))
                     };
                 });
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireUppercase = false;
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+            });
+
+            services.AddScoped<IAuthService, AuthService>();
 
             //services.AddScoped<ICustomerRepository, CustomerRepository>();
             //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
