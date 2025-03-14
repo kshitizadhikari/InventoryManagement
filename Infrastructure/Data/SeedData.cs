@@ -7,8 +7,15 @@ namespace Infrastructure.Data
     {
         public static async Task SeedRoleAsync(RoleManager<IdentityRole> roleManager)
         {
-            await roleManager.CreateAsync(new IdentityRole(Role.Admin.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Role.User.ToString()));
+            if (!await roleManager.RoleExistsAsync(Role.Admin.ToString()))
+            {
+                await roleManager.CreateAsync(new IdentityRole(Role.Admin.ToString()));
+            }
+
+            if (!await roleManager.RoleExistsAsync(Role.User.ToString()))
+            {
+                await roleManager.CreateAsync(new IdentityRole(Role.User.ToString()));
+            }
         }
     }
 }
