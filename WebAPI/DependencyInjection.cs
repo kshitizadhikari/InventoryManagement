@@ -8,7 +8,7 @@ namespace WebAPI
         public static IServiceCollection AddAppDI(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddCors();
-            services.AddApplicationDI()
+            services.AddApplicationDI(configuration)
                     .AddInfrastructureDI(configuration);
             //services.AddExceptionHandler<CustomExceptionHandler>();
             return services;
