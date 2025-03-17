@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{20B2A820-04F4-4B9C-8C14-29943F335C94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{20B2A820-04F4-4B9C-8C14-29943F335C94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{15F64AC4-1797-4C29-A996-469D77753BE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{15F64AC4-1797-4C29-A996-469D77753BE1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{20B2A820-04F4-4B9C-8C14-29943F335C94} = {20B2A820-04F4-4B9C-8C14-29943F335C94}
 		{CFB72E25-E4DB-488B-8F9A-27FAA9547B3F} = {CFB72E25-E4DB-488B-8F9A-27FAA9547B3F}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{CFB72E25-E4DB-488B-8F9A-27FAA9547B3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{CFB72E25-E4DB-488B-8F9A-27FAA9547B3F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{20B2A820-04F4-4B9C-8C14-29943F335C94} = {20B2A820-04F4-4B9C-8C14-29943F335C94}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{1227EF73-CAB8-4A4A-9920-5AE18BC8A11B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{1227EF73-CAB8-4A4A-9920-5AE18BC8A11B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{15F64AC4-1797-4C29-A996-469D77753BE1} = {15F64AC4-1797-4C29-A996-469D77753BE1}
 		{CFB72E25-E4DB-488B-8F9A-27FAA9547B3F} = {CFB72E25-E4DB-488B-8F9A-27FAA9547B3F}
