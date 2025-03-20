@@ -8,7 +8,7 @@ public static class CategoryMapper
     {
         return new Category
         {
-            Id = dto.Id == null ? Guid.NewGuid() : Guid.Parse(dto.Id),
+            Id = string.IsNullOrEmpty(dto.Id) ? Guid.NewGuid() : Guid.Parse(dto.Id),
             Name = dto.Name
         };
     }
