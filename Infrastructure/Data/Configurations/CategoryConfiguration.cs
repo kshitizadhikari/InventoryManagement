@@ -14,6 +14,9 @@ namespace Infrastructure.Data.Configurations
                    .IsRequired()
                    .HasMaxLength(100);
 
+            builder.HasIndex(c => c.Name)
+                            .IsUnique();
+
             builder.HasMany(c => c.SubCategories)
                    .WithOne(sc => sc.Category)
                    .HasForeignKey(sc => sc.CategoryId)

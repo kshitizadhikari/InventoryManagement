@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Interfaces.Repositories;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +20,7 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-       
+
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -31,7 +33,8 @@ public static class DependencyInjection
 
 
         //services.AddScoped<ICustomerRepository, CustomerRepository>();
-        //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         return services;
     }
 
