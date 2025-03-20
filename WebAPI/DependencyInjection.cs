@@ -7,9 +7,8 @@ public static class DependencyInjection
     public static IServiceCollection AddAppDI(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddCors();
-        services.AddApplicationDI(configuration)
-                .AddInfrastructureDI(configuration);
-        //services.AddExceptionHandler<CustomExceptionHandler>();
+        services.AddInfrastructureDI(configuration);
+        services.AddApplicationDI(configuration);
         return services;
     }
 }
