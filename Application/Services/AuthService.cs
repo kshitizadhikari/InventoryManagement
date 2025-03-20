@@ -62,28 +62,6 @@ public class AuthService : IAuthService
             });
         }
 
-        //var authClaims = new List<Claim>
-        //{
-        //    new Claim(ClaimTypes.Name, user.UserName!),
-        //    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        //};
-
-        //var userRoles = await _userManager.GetRolesAsync(user);
-
-        //foreach (var role in userRoles)
-        //{
-        //    authClaims.Add(new Claim(ClaimTypes.Role, role));
-        //}
-
-        //var jwtSettings = _configuration.GetSection("JwtSettings");
-        //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]!));
-        //var token = new JwtSecurityToken(
-        //     issuer: jwtSettings["Issuer"],
-        //     expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpiryMinutes"])),
-        //     claims: authClaims,
-        //     signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
-        // );
-
         var accessToken = await CreateToken(user);
 
         return (new AuthResponseDTO
