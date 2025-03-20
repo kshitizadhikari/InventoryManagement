@@ -5,44 +5,42 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure
+namespace Infrastructure;
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static IServiceCollection AddInfrastructureDI(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructureDI(this IServiceCollection services, IConfiguration configuration)
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
+       
+
+        services.Configure<IdentityOptions>(options =>
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequiredUniqueChars = 0;
+            options.Password.RequireUppercase = false;
+            options.Lockout.MaxFailedAccessAttempts = 3;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+        });
 
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+        //services.AddScoped<ICustomerRepository, CustomerRepository>();
+        //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+        return services;
+    }
 
-           
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredUniqueChars = 0;
-                options.Password.RequireUppercase = false;
-                options.Lockout.MaxFailedAccessAttempts = 3;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-            });
-
-
-            //services.AddScoped<ICustomerRepository, CustomerRepository>();
-            //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-            return services;
-        }
-
-        public static async Task InitializeDatabaseAsync(IServiceProvider serviceProvider)
+    public static async Task InitializeDatabaseAsync(IServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
         {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                await SeedData.SeedRoleAsync(roleManager);
-            }
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            await SeedData.SeedRoleAsync(roleManager);
         }
     }
 }

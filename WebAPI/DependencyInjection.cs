@@ -1,17 +1,15 @@
 ﻿using Application;
 using Infrastructure;
 
-namespace WebAPI
+namespace WebAPI;
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static IServiceCollection AddAppDI(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddAppDI(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddCors();
-            services.AddApplicationDI(configuration)
-                    .AddInfrastructureDI(configuration);
-            //services.AddExceptionHandler<CustomExceptionHandler>();
-            return services;
-        }
+        services.AddCors();
+        services.AddApplicationDI(configuration)
+                .AddInfrastructureDI(configuration);
+        //services.AddExceptionHandler<CustomExceptionHandler>();
+        return services;
     }
 }

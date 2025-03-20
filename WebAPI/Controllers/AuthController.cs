@@ -2,7 +2,6 @@
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers;
 [Route("api/[controller]")]
@@ -31,7 +30,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginUserDTO dto)
     {
-        var (res, err)= await _authService.LoginAsync(dto);
+        var (res, err) = await _authService.LoginAsync(dto);
         if (err != null)
         {
             return BadRequest(err);
