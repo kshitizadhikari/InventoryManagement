@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using WebAPI;
+using WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -42,7 +43,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddAppDI(builder.Configuration);
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionMiddleware>();
 // Run role seeding after app is built
 using (var scope = app.Services.CreateScope())
 {
