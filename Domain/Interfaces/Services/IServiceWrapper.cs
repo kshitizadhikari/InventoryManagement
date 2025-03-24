@@ -3,6 +3,6 @@
     public interface IServiceWrapper
     {
         public ICategoryService CategoryService { get; }
-        public ISubCategoryService ISubCategoryService { get; }
+        public ISubCategoryService SubCategoryService { get; }
     }
 }

@@ -12,6 +12,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationDI(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ISubCategoryService, SubCategoryService>();
         services.AddScoped<IServiceWrapper, ServiceWrapper>();
 
         services.AddScoped<IAuthService, AuthService>();

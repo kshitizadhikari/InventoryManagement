@@ -7,6 +7,6 @@ public class ServiceWrapper(ICategoryService categoryService, ISubCategoryServic
     public ISubCategoryService _subCategoryService = subCategoryService;
 
     public ICategoryService CategoryService => _categoryService;
-    public ISubCategoryService ISubCategoryService => _subCategoryService;
+    public ISubCategoryService SubCategoryService => _subCategoryService;
 }
 
