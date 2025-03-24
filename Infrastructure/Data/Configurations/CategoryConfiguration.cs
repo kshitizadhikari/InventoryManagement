@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.Configurations
 {
-    public class CategoryConfiguration: IEntityTypeConfiguration<Category>
+    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
@@ -15,11 +15,16 @@ namespace Infrastructure.Data.Configurations
                    .HasMaxLength(100);
 
             builder.HasIndex(c => c.Name)
-                            .IsUnique();
+                   .IsUnique();
 
             builder.HasMany(c => c.SubCategories)
                    .WithOne(sc => sc.Category)
                    .HasForeignKey(sc => sc.CategoryId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(c => c.Products)
+                   .WithOne(p => p.Category)
+                   .HasForeignKey(p => p.CategoryId)
                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
