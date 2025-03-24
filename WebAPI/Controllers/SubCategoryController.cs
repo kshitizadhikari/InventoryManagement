@@ -35,7 +35,7 @@ public class SubCategoryController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(SubCategoryDTO dto)
+    public async Task<IActionResult> Post([FromBody] SubCategoryDTO dto)
     {
         var (res, err) = await _services.SubCategoryService.CreateAsync(dto);
         if (err != null)
@@ -45,7 +45,7 @@ public class SubCategoryController : ControllerBase
         return Ok(res);
     }
 
-    [HttpPost("Update")]
+    [HttpPut]
     public async Task<IActionResult> Update(SubCategoryDTO dto)
     {
         var (res, err) = await _services.SubCategoryService.UpdateAsync(dto);

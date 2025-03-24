@@ -38,7 +38,7 @@ namespace WebAPI.Middlewares
                     {
                         ErrorCode = defaultErrorCode,
                         Title = "Unexpected Error",
-                        Message = "An unexpected error has occured. Please try again later."
+                        Message = ex.Message,
                     };
                     break;
             }

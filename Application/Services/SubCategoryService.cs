@@ -86,6 +86,16 @@ public class SubCategoryService(IRepositoryWrapper repos) : ISubCategoryService
             });
         }
 
+        if (!await _repos.CategoryRepository.ExistsAsync(Guid.Parse(dto.CategoryId)))
+        {
+            return (null, new ErrorResponse
+            {
+                ErrorCode = 500,
+                Title = "Fetching Error",
+                Message = "Invalid Category Id."
+            });
+        }
+
         entity.CategoryId = Guid.Parse(dto.CategoryId);
         entity.Name = dto.Name;
 

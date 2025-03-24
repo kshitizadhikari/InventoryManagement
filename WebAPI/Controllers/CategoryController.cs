@@ -44,7 +44,7 @@ public class CategoryController : ControllerBase
         return Ok(res);
     }
 
-    [HttpPost("Update")]
+    [HttpPut]
     public async Task<IActionResult> Update(CategoryDTO dto)
     {
         var (res, err) = await _services.CategoryService.UpdateAsync(dto);
