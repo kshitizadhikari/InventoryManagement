@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.Configurations
 {
-    public class SubCategoryConfiguration: IEntityTypeConfiguration<SubCategory>
+    public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
     {
         public void Configure(EntityTypeBuilder<SubCategory> builder)
         {
@@ -13,6 +13,9 @@ namespace Infrastructure.Data.Configurations
             builder.Property(sc => sc.Name)
                    .IsRequired()
                    .HasMaxLength(100);
+
+            builder.HasIndex(c => c.Name)
+                   .IsUnique();
 
             builder.HasOne(sc => sc.Category)
                    .WithMany(c => c.SubCategories)

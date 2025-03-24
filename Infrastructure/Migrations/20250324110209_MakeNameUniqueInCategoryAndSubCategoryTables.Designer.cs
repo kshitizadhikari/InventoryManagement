@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250320093233_MakeCategoryNameUniqueInCategoriesTable")]
-    partial class MakeCategoryNameUniqueInCategoriesTable
+    [Migration("20250324110209_MakeNameUniqueInCategoryAndSubCategoryTables")]
+    partial class MakeNameUniqueInCategoryAndSubCategoryTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -199,6 +199,9 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("SubCategories");
                 });
