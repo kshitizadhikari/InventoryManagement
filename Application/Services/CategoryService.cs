@@ -38,9 +38,30 @@ public class CategoryService(IRepositoryWrapper repos) : ICategoryService
         return res.MapToDTO();
     }
 
-    public Task<(CategoryDTO?, ErrorResponse?)> GetByIdAsync(string id)
+    public async Task<(CategoryDTO?, ErrorResponse?)> GetByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        if (id == null)
+        {
+            return (null, new ErrorResponse
+            {
+                ErrorCode = 500,
+                Title = "Fetching Error",
+                Message = "Id cannot be null."
+            });
+        }
+
+        var entity = await _repos.CategoryRepository.GetByIdAsync(Guid.Parse(id));
+        if (entity == null)
+        {
+            return (null, new ErrorResponse
+            {
+                ErrorCode = 500,
+                Title = "Fetching Error",
+                Message = "Entity doesn't exist."
+            });
+        }
+        return (entity.MapToDTO(), null);
+
     }
 
     public async Task<(CategoryDTO?, ErrorResponse?)> UpdateAsync(CategoryDTO dto)
@@ -66,7 +87,7 @@ public class CategoryService(IRepositoryWrapper repos) : ICategoryService
             });
         }
 
-        entity = dto.MapToEntity();
+        entity.Name = dto.Name;
         await _repos.CategoryRepository.UpdateAsync(entity);
         return (entity.MapToDTO(), null);
     }
