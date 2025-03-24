@@ -2,6 +2,7 @@
 {
     public interface IServiceWrapper
     {
-        public ICategoryService CategoryService{ get; }
+        public ICategoryService CategoryService { get; }
+        public ISubCategoryService ISubCategoryService { get; }
     }
 }
