@@ -4,5 +4,6 @@
     {
         public ICategoryService CategoryService { get; }
         public ISubCategoryService SubCategoryService { get; }
+        public IProductService ProductService { get; }
     }
 }

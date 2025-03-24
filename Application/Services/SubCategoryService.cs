@@ -103,4 +103,18 @@ public class SubCategoryService(IRepositoryWrapper repos) : ISubCategoryService
         return (entity.MapToDTO(), null);
     }
 
+    public async Task<ErrorResponse?> DeleteAsync(string id)
+    {
+        if (!await _repos.SubCategoryRepository.DeleteAsync(Guid.Parse(id)))
+        {
+            return new ErrorResponse
+            {
+                ErrorCode = 500,
+                Title = "Deletion Error",
+                Message = "Failed to delete sub-category."
+            };
+        }
+        return null;
+    }
+    
 };

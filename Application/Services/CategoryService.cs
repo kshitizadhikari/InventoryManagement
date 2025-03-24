@@ -92,4 +92,18 @@ public class CategoryService(IRepositoryWrapper repos) : ICategoryService
         return (entity.MapToDTO(), null);
     }
 
+    public async Task<ErrorResponse?> DeleteAsync(string id)
+    {
+        if (!await _repos.CategoryRepository.DeleteAsync(Guid.Parse(id)))
+        {
+            return new ErrorResponse
+            {
+                ErrorCode = 500,
+                Title = "Deletion Error",
+                Message = "Failed to delete category."
+            };
+        }
+        return null;
+    }
+
 }

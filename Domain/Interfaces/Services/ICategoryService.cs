@@ -8,4 +8,5 @@ public interface ICategoryService
     Task<List<CategoryDTO>> GetAllAsync();
     Task<(CategoryDTO?, ErrorResponse?)> GetByIdAsync(string id);
     Task<(CategoryDTO?, ErrorResponse?)> UpdateAsync(CategoryDTO dto);
+    Task<ErrorResponse?> DeleteAsync(string id);
 }
