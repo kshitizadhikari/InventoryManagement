@@ -15,11 +15,28 @@ public class CategoryController : ControllerBase
     {
         _services = categoryService;
     }
+    [HttpGet]
+    public async Task<IActionResult> GetById(string id)
+    {
+        var (res, err) = await _services.CategoryService.GetByIdAsync(id);
+        if (err != null)
+        {
+            return BadRequest(err);
+        }
+        return Ok(res);
+    }
+
+    [HttpGet("GetAll")]
+    public async Task<IActionResult> GetAll()
+    {
+        var res = await _services.CategoryService.GetAllAsync();
+        return Ok(res);
+    }
 
     [HttpPost]
     public async Task<IActionResult> Post(CategoryDTO dto)
     {
-        var (res, err)= await _services.CategoryService.CreateAsync(dto);
+        var (res, err) = await _services.CategoryService.CreateAsync(dto);
         if (err != null)
         {
             return BadRequest(err);
@@ -27,5 +44,5 @@ public class CategoryController : ControllerBase
 
         return Ok(res);
     }
-    
-  }
+
+}

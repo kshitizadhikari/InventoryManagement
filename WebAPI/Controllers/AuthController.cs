@@ -15,7 +15,7 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
-    [HttpPost("register")]
+    [HttpPost("Register")]
     public async Task<IActionResult> Register(RegisterUserDTO dto)
     {
         var err = await _authService.RegisterAsync(dto);
@@ -27,7 +27,7 @@ public class AuthController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("login")]
+    [HttpPost("Login")]
     public async Task<IActionResult> Login(LoginUserDTO dto)
     {
         var (res, err) = await _authService.LoginAsync(dto);
@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
         return Ok(res);
     }
 
-    [HttpPost("assign-role")]
+    [HttpPost("AssignRole")]
     public async Task<IActionResult> AssignRole(RoleAssignment item)
     {
         var err = await _authService.AssignRoleAsync(item);
