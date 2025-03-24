@@ -55,4 +55,15 @@ public class CategoryController : ControllerBase
         return Ok(res);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var err = await _services.CategoryService.DeleteAsync(id);
+        if (err != null)
+        {
+            return BadRequest(err);
+        }
+        return Ok();
+    }
+
 }

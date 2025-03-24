@@ -13,6 +13,7 @@ public static class DependencyInjection
     {
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ISubCategoryService, SubCategoryService>();
+        services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IServiceWrapper, ServiceWrapper>();
 
         services.AddScoped<IAuthService, AuthService>();
