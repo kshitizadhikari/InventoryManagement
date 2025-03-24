@@ -15,7 +15,7 @@ public class CategoryController : ControllerBase
     {
         _services = categoryService;
     }
-    [HttpGet]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
         var (res, err) = await _services.CategoryService.GetByIdAsync(id);
@@ -41,7 +41,17 @@ public class CategoryController : ControllerBase
         {
             return BadRequest(err);
         }
+        return Ok(res);
+    }
 
+    [HttpPost("Update")]
+    public async Task<IActionResult> Update(CategoryDTO dto)
+    {
+        var (res, err) = await _services.CategoryService.UpdateAsync(dto);
+        if (err != null)
+        {
+            return BadRequest(err);
+        }
         return Ok(res);
     }
 
