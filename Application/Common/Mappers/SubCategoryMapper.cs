@@ -1,14 +1,14 @@
 ﻿using Domain.Entities;
 using Domain.Entities.DTOs;
 
-namespace Application.Mappers;
+namespace Application.Common.Mappers;
 public static class SubSubCategoryMapper
 {
     public static SubCategory MapToEntity(this SubCategoryDTO dto)
     {
         return new SubCategory
         {
-            Id = string.IsNullOrEmpty(dto.Id) ? Guid.NewGuid() : Guid.Parse(dto.Id),
+            Id = Utils.ParseOrNewGuid(dto.Id),
             Name = dto.Name,
             CategoryId = Guid.Parse(dto.CategoryId)
         };

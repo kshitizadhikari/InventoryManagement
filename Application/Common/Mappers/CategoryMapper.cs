@@ -1,14 +1,14 @@
 ﻿using Domain.Entities;
 using Domain.Entities.DTOs;
 
-namespace Application.Mappers;
+namespace Application.Common.Mappers;
 public static class CategoryMapper
 {
     public static Category MapToEntity(this CategoryDTO dto)
     {
         return new Category
         {
-            Id = string.IsNullOrEmpty(dto.Id) ? Guid.NewGuid() : Guid.Parse(dto.Id),
+            Id = Utils.ParseOrNewGuid(dto.Id),
             Name = dto.Name
         };
     }
