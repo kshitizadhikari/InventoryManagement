@@ -6,7 +6,7 @@ public class ProductDTO
     public string Description { get; set; }
     public decimal Price { get; set; }
     public string CategoryId { get; set; }
-    public string SubCategoryId { get; set; }
+    public string? SubCategoryId { get; set; }
     public CategoryDTO? Category { get; set; }
     public SubCategoryDTO? SubCategory { get; set; }
 }

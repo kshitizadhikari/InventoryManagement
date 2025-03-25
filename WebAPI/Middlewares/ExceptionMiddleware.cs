@@ -56,7 +56,8 @@ namespace WebAPI.Middlewares
                 {
                     ErrorCode = (int)HttpStatusCode.Conflict, // 409
                     Title = "Duplicate Entry",
-                    Message = "A record with the same values already exists."
+                    Message = "A record with the same values already exists.",
+                    Details = dbEx.Message
                 };
             }
 
@@ -64,7 +65,8 @@ namespace WebAPI.Middlewares
             {
                 ErrorCode = (int)HttpStatusCode.InternalServerError,
                 Title = "Database Error",
-                Message = "A database error occured. Please try again later."
+                Message = "A database error occured. Please try again later.",
+                Details = dbEx.Message
             };
         }
     }

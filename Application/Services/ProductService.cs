@@ -1,4 +1,4 @@
-﻿using Application.Mappers;
+﻿using Application.Common.Mappers;
 using Domain.Entities;
 using Domain.Entities.DTOs;
 using Domain.Interfaces.Repositories;
@@ -11,18 +11,28 @@ public class ProductService(IRepositoryWrapper repos) : IProductService
 
     public async Task<(ProductDTO?, ErrorResponse?)> CreateAsync(ProductDTO dto)
     {
+        var entity = dto.MapToEntity();
 
-        if (dto.CategoryId == null)
+        if (!await _repos.CategoryRepository.ExistsAsync(Guid.Parse(dto.CategoryId)))
         {
             return (null, new ErrorResponse
             {
-                Title = "Creation Error",
-                ErrorCode = 400,
-                Message = "Product must belong to a category."
+                ErrorCode = 500,
+                Title = "Fetching Error",
+                Message = "Product doesn't belong to any category."
             });
         }
+        entity.CategoryId = Guid.Parse(dto.CategoryId);
 
-        var entity = dto.MapToEntity();
+        if (dto.SubCategoryId == null || !await _repos.SubCategoryRepository.ExistsAsync(Guid.Parse(dto.SubCategoryId)))
+        {
+            entity.SubCategoryId = null;
+        }
+        else
+        {
+            entity.SubCategoryId = Guid.Parse(dto.SubCategoryId);
+        }
+
         var res = await _repos.ProductRepository.CreateAsync(entity);
         return (res.MapToDTO(), null);
     }
@@ -30,12 +40,6 @@ public class ProductService(IRepositoryWrapper repos) : IProductService
     public async Task<List<ProductDTO>> GetAllAsync()
     {
         var res = await _repos.ProductRepository.GetAllAsync();
-
-        if (res == null)
-        {
-            return new List<ProductDTO>();
-        }
-
         return res.MapToDTO();
     }
 
@@ -43,6 +47,7 @@ public class ProductService(IRepositoryWrapper repos) : IProductService
     {
 
         var entity = await _repos.ProductRepository.GetByIdAsync(Guid.Parse(id));
+
         if (entity == null)
         {
             return (null, new ErrorResponse
@@ -52,6 +57,7 @@ public class ProductService(IRepositoryWrapper repos) : IProductService
                 Message = "Entity doesn't exist."
             });
         }
+
         return (entity.MapToDTO(), null);
 
     }
@@ -70,8 +76,8 @@ public class ProductService(IRepositoryWrapper repos) : IProductService
         }
 
         entity.Name = dto.Name;
-        entity.Price = dto.Price;
         entity.Description = dto.Description;
+        entity.Price = dto.Price;
 
         if (!await _repos.CategoryRepository.ExistsAsync(Guid.Parse(dto.CategoryId)))
         {
@@ -84,7 +90,7 @@ public class ProductService(IRepositoryWrapper repos) : IProductService
         }
         entity.CategoryId = Guid.Parse(dto.CategoryId);
 
-        if (!await _repos.SubCategoryRepository.ExistsAsync(Guid.Parse(dto.SubCategoryId)))
+        if (dto.SubCategoryId == null || !await _repos.SubCategoryRepository.ExistsAsync(Guid.Parse(dto.SubCategoryId)))
         {
             entity.SubCategoryId = null;
         }
