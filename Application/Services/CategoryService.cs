@@ -1,4 +1,4 @@
-﻿using Application.Mappers;
+﻿using Application.Common.Mappers;
 using Domain.Entities;
 using Domain.Entities.DTOs;
 using Domain.Interfaces.Repositories;
@@ -11,17 +11,7 @@ public class CategoryService(IRepositoryWrapper repos) : ICategoryService
 
     public async Task<(CategoryDTO?, ErrorResponse?)> CreateAsync(CategoryDTO dto)
     {
-        if (dto == null)
-        {
-            return (null, new ErrorResponse
-            {
-                ErrorCode = 400,
-                Title = "Creation Error",
-                Message = "Category data cannot be null"
-            });
-        }
         var entity = dto.MapToEntity();
-
         var res = await _repos.CategoryRepository.CreateAsync(entity);
         return (res.MapToDTO(), null);
     }
@@ -29,27 +19,11 @@ public class CategoryService(IRepositoryWrapper repos) : ICategoryService
     public async Task<List<CategoryDTO>> GetAllAsync()
     {
         var res = await _repos.CategoryRepository.GetAllAsync();
-
-        if (res == null)
-        {
-            return new List<CategoryDTO>();
-        }
-
         return res.MapToDTO();
     }
 
     public async Task<(CategoryDTO?, ErrorResponse?)> GetByIdAsync(string id)
     {
-        if (id == null)
-        {
-            return (null, new ErrorResponse
-            {
-                ErrorCode = 500,
-                Title = "Fetching Error",
-                Message = "Id cannot be null."
-            });
-        }
-
         var entity = await _repos.CategoryRepository.GetByIdAsync(Guid.Parse(id));
         if (entity == null)
         {
@@ -66,16 +40,6 @@ public class CategoryService(IRepositoryWrapper repos) : ICategoryService
 
     public async Task<(CategoryDTO?, ErrorResponse?)> UpdateAsync(CategoryDTO dto)
     {
-        if (dto == null)
-        {
-            return (null, new ErrorResponse
-            {
-                ErrorCode = 400,
-                Title = "Updation Error",
-                Message = "Category data cannot be null."
-            });
-        }
-
         var entity = await _repos.CategoryRepository.GetByIdAsync(Guid.Parse(dto.Id));
         if (entity == null)
         {
